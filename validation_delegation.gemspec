@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ben Eddy"]
   spec.email         = ["bae@foraker.com"]
   spec.description   = %q{Delegates validation between objects}
-  spec.summary       = %q{Delegates validation between objects}
-  spec.homepage      = ""
+  spec.summary       = %q{Validation delegation allows an object to proxy validations to other objects. This facilitates composition and prevents the duplication of validation logic.}
+  spec.homepage      = "https://github.com/foraker/validation_delegation"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
