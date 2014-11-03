@@ -37,13 +37,13 @@ module ValidationDelegation
     end
 
     def transplant_errors(options)
-      validate do
+      validate lambda {
         return unless send(options[:if]) if options[:if]
         return if send(options[:unless]) if options[:unless]
 
         object = send(options[:to])
         ErrorTransplanter.new(self, object, options).transplant unless object.valid?
-      end
+      }
     end
   end
 
