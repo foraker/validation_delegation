@@ -31,6 +31,7 @@ end
 
 class SignUp
   include ActiveModel::Validations
+  include ValidationDelegation
 
   # delegate validation to the user
   delegate_validation to: :user
@@ -83,6 +84,7 @@ If you do not want to copy errors directly onto the composing object, you can sp
 ```Ruby
 class SignUp
   include ActiveModel::Model
+  include ValidationDelegation
 
   delegate_validation :organization, to: :organization
 
@@ -114,6 +116,8 @@ signup.errors.full_messages
 
 ```Ruby
 class SignUp
+  # ...
+
   delegate_validation to: :user, if: :validate_user?
 
   def validate_user?
@@ -126,6 +130,8 @@ end
 
 ```Ruby
 class SignUp
+  # ...
+
   delegate_validation to: :user, unless: :skip_validation?
 
   def skip_validation?
@@ -138,6 +144,8 @@ end
 
 ```Ruby
 class SignUp
+  # ...
+
   delegate_validation to: :user, only: :email
 end
 
@@ -154,6 +162,8 @@ signup.errors.full_messages
 
 ```Ruby
 class SignUp
+  # ...
+
   delegate_validation to: :user, except: :email
 end
 
