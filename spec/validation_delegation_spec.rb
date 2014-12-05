@@ -85,7 +85,7 @@ describe ValidationDelegation do
     expect(subject).to have_error("is invalid").on(:attr)
   end
 
-  context "an method is supplied" do
+  context "a method is supplied" do
     it "copies errors to the specified method and prefixes the attribute name" do
       TestClass.delegate_validation :my_method, to: :validator
       expect(subject).to have_error("attr is invalid").on(:my_method)
@@ -99,11 +99,21 @@ describe ValidationDelegation do
       expect(subject).to have_error("attr is bananas").on(:my_method)
     end
 
-    it "reformats nested attribute errors" do
+    it "translates errors if possible" do
+      TestClass.delegate_validation :my_method, to: :validator
+
+      allow(TestClass).to receive(:human_attribute_name)
+        .with(:attr)
+        .and_return("Human attribute")
+
+      expect(subject).to have_error("human attribute is invalid").on(:my_method)
+    end
+
+    it "translates nested attribute errors" do
       TestClass.delegate_validation :my_method, to: :validator
       validator.errors[:"associated_class.attribute"] << "is bananas"
 
-      expect(subject).to have_error("associated class attribute is bananas").on(:my_method)
+      expect(subject).to have_error("attribute is bananas").on(:my_method)
     end
 
     it "copies errors if the :if option is true" do
@@ -143,5 +153,4 @@ describe ValidationDelegation do
       expect(subject).to have_error("attr is invalid").on(:my_method)
     end
   end
-
 end

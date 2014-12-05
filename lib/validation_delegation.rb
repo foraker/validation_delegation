@@ -24,7 +24,7 @@ module ValidationDelegation
   end
 
   def format_attribute(attribute_name)
-    attribute_name.to_s.humanize.downcase.gsub(/\./, " ")
+    self.class.human_attribute_name(attribute_name).downcase
   end
 
   module ClassMethods
